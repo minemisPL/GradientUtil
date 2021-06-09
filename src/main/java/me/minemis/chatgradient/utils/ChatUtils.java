@@ -8,16 +8,15 @@ import java.awt.*;
 public class ChatUtils {
 
     public static String gradient(String content, Color... colors){
-
         StringBuilder result = new StringBuilder();
 
-        double divisions = colors.length - 1.0D; // [blue] [red] [green] 3 - 1 = 2
-        double divider = content.length() / divisions; // "123456" 6 / 2 = 3
+        double divisions = colors.length - 1.0D;
+        double divider = content.length() / divisions;
 
         int first = 0;
 
         for (int index = 0; index < divisions; index++){
-            int second = (int) (divider * (index + 1)); // 6 / 3 = 2
+            int second = (int) (divider * (index + 1));
 
             String substring = content.substring(first, second);
             first = second;
