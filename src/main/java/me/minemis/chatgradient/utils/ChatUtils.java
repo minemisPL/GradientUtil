@@ -4,29 +4,40 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ChatUtils {
 
-    public static String gradient(String s, Color... colors){
+    public static String gradient(String content, Color... colors){
 
-        char[] chars = s.toCharArray();
+        StringBuilder result = new StringBuilder();
 
-        ArrayList<String> strings = new ArrayList<>();
+        double divisions = colors.length - 1.0D; // [blue] [red] [green] 3 - 1 = 2
+        double divider = content.length() / divisions; // "123456" 6 / 2 = 3
 
-        int divisions = colors.length - 1;
+        int first = 0;
 
-        for (int index = 0; index < colors.length; index++){
-            for (char c : chars) {
+        for (int index = 0; index < divisions; index++){
+            int second = (int) (divider * (index + 1)); // 6 / 3 = 2
 
-            }
+            String substring = content.substring(first, second);
+            first = second;
+
+            result.append(gradientTwoColors(substring, colors[index], colors[index + 1]));
         }
+
+        return result.toString();
     }
 
-    private static String gradientTwoColors(String s, Color color, Color color2) {
+    private static String gradientTwoColors(String content, Color color, Color color2) {
 
-        char[] chars = s.toCharArray();
-        int length = s.length();
+        char[] chars = content.toCharArray();
+        int length = content.length();
+        StringBuilder result = new StringBuilder();
+
+        if (length == 1) {
+            result.append(ChatColor.of(color)).append(content);
+            return result.toString();
+        }
 
         int r = color.getRed();
         int g = color.getGreen();
@@ -46,16 +57,14 @@ public class ChatUtils {
 
         System.out.println(redDivider + " " + greenDivider + " " + blueDivider);
 
-        StringBuilder result = new StringBuilder();
-
         int index = 0;
 
-        for (Character c : chars) {
+        for (char c : chars) {
             result.append(ChatColor.of(new Color(
                     r - index * redDivider,
                     g - index * greenDivider,
                     b - index * blueDivider
-            ))).append(c.toString());
+            ))).append(c);
 
             index ++;
         }
