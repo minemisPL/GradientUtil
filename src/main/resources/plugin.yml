@@ -1,0 +1,7 @@
+name: ChatGradient
+version: ${project.version}
+main: me.minemis.chatgradient.ChatGradient
+api-version: 1.16
+commands:
+  gradient:
+    usage: /gradient
